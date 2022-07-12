@@ -1,10 +1,12 @@
-if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
-    export PATH="$HOME/.local/bin:$PATH"
-    exec startx
-fi
+#!/usr/bin/env zsh
 
-# wsl spesific
 if [[ ! -v INSIDE_GENIE ]]; then
     echo "Starting genie..."
     exec /usr/bin/genie -s
+    clear
+fi
+
+# autostart zsh agent
+if [ $(ps aux | grep ssh-agent | wc -l) -eq 1 ]; then
+  eval "$(ssh-agent -s)"
 fi
